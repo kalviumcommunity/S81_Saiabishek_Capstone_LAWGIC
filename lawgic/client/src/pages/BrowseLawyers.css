@@ -1,0 +1,21 @@
+/* Browse Lawyers Page Styles */
+.browse-lawyers {
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .lawyer-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lawyer-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
+  
