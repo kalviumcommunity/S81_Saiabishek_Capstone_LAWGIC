@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Schema for the Lawyer model
 const lawyerSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,8 +14,12 @@ const lawyerSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  cases: [String]  // Example array of past cases
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  }
 });
 
+// Export the model
 module.exports = mongoose.model('Lawyer', lawyerSchema);
-
