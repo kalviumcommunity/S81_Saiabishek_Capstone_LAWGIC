@@ -56,6 +56,15 @@ router.get('/me', verifyToken, async (req, res) => {
   }
 });
 
+router.get("/users", async (req, res) => {
+    try {
+      const users = await User.find();
+      res.json(users);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
 // JWT Middleware
 function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
@@ -71,4 +80,15 @@ function verifyToken(req, res, next) {
   }
 }
 
-module.exports = router;
+router.post("/register", async (req, res) => {
+    try {
+      const { name, email, password, role } = req.body;
+      const newUser = new User({ name, email, password, role });
+      await newUser.save();
+      res.status(201).json({ message: "User registered successfully", newUser });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  });
+  
+  module.exports = router;
