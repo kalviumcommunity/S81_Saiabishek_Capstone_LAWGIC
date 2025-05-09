@@ -1,11 +1,20 @@
-// models/Lawyer.js
 const mongoose = require('mongoose');
 
 const lawyerSchema = new mongoose.Schema({
-  name: String,
-  specialization: String,
-  experience: Number,
-  contact: String
+  name: {
+    type: String,
+    required: true
+  },
+  specialization: {
+    type: String,
+    required: true
+  },
+  experience: {
+    type: Number,
+    required: true
+  },
+  cases: [String]  // Example array of past cases
 });
 
 module.exports = mongoose.model('Lawyer', lawyerSchema);
+
