@@ -1,15 +1,14 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/database');
-const lawyerRoutes = require('./routes/lawyerRoutes');
-
-dotenv.config();
-connectDB();
-
 const app = express();
+const lawyerRoutes = require('./routes/lawyerRoutes'); // adjust path if needed
+
+// Middlewares
 app.use(express.json());
 
+// Routes
 app.use('/api/lawyers', lawyerRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Server listener
+app.listen(5000, () => {
+  console.log('Server is running on port 5000');
+});
