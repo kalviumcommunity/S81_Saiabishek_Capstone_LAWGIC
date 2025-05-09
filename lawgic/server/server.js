@@ -1,30 +1,31 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const lawyerRoutes = require('./routes/lawyerRoutes');
 const cors = require('cors');
 
+const userRoutes = require('./routes/userRoutes');
+const lawyerRoutes = require('./routes/lawyerRoutes'); // Import lawyer routes
+
 const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware
 app.use(cors());
-app.use(express.json());  // Middleware to parse JSON request bodies
+app.use(express.json());
+app.use("/api/user", userRoutes); 
 
-// MongoDB connection string
-const dbURI = 'mongodb://127.0.0.1:27017/lawgic'; // Change this to your MongoDB URI if using a cloud database like MongoDB Atlas
-
-// Connect to MongoDB
-mongoose.connect(dbURI, {
-  useNewUrlParser: true,    // Use the new URL parser to avoid deprecation warnings
-  useUnifiedTopology: true // Use the new unified topology engine to avoid deprecation warnings
+// MongoDB Connection
+mongoose.connect('mongodb://127.0.0.1:27017/lawgic', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
 .then(() => console.log('✅ MongoDB Connected'))
-.catch((err) => {
-  console.error('❌ MongoDB connection error:', err);
-  process.exit(1); // Exit the process if MongoDB fails to connect
-});
+.catch(err => console.log('❌ MongoDB connection error:', err));
 
-// Use routes
-app.use('/api/lawyers', lawyerRoutes);
+// Routes
+app.use('/api/users', userRoutes);       // For user login, registration, and JWT
+app.use('/api/lawyers', lawyerRoutes);   // For lawyer-related endpoints
 
-// Start the server
-app.listen(5000, () => {
-  console.log('🚀 Server running at http://localhost:5000');
+// Start Server
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
