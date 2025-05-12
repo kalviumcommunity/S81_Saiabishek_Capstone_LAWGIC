@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use("/api/user", userRoutes); 
+app.use('/api/lawyers', lawyerRoutes);
 
 // MongoDB Connection
 mongoose.connect('mongodb://127.0.0.1:27017/lawgic', {

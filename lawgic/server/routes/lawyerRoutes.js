@@ -24,5 +24,21 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Error creating lawyer', error: error.message });
   }
 });
+//PUT : update lawyer profile
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedLawyer = await Lawyer.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    if (!updatedLawyer) {
+      return res.status(404).json({ message: 'Lawyer not found' });
+    }
+    res.status(200).json(updatedLawyer);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = router;
