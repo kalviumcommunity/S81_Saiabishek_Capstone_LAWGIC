@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const userRoutes = require('./routes/userRoutes');
-const lawyerRoutes = require('./routes/lawyerRoutes'); // Import lawyer routes
+const lawyerRoutes = require('./routes/lawyerRoutes');
+const problemRoutes = require('./routes/problems'); // Import lawyer routes
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/user", userRoutes); 
 app.use('/api/lawyers', lawyerRoutes);
+app.use('/api/problems', problemRoutes);
 
 // MongoDB Connection
 mongoose.connect('mongodb://127.0.0.1:27017/lawgic', {
