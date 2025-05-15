@@ -6,10 +6,14 @@ import "./Login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
     try {
       const res = await axios.post("http://localhost:5000/api/login", {
         email,
@@ -20,11 +24,13 @@ const Login = () => {
         alert("Login successful");
         navigate("/home");
       } else {
-        alert(res.data.message);
+        setError(res.data.message);
       }
     } catch (err) {
+      setError("Unable to login. Please try again later.");
       console.error(err);
-      alert("Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,7 +42,9 @@ const Login = () => {
 
       <form className="login-form" onSubmit={handleLogin}>
         <h3>Login</h3>
-        <p>please login to continue.</p>
+        <p>Please login to continue.</p>
+
+        {error && <p className="error-message">{error}</p>}
 
         <input
           type="email"
@@ -55,10 +63,12 @@ const Login = () => {
         />
 
         <div className="forgot-password">
-          <Link to="/forgot-password">forgot password?</Link>
+          <Link to="/forgot-password">Forgot password?</Link>
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </form>
 
       <div style={{ textAlign: "center", marginTop: "10px" }}>
